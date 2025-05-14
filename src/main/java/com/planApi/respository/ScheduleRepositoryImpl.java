@@ -20,7 +20,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     private RowMapper<Schedule> scheduleRowMapper = (rs, rowNum) -> new Schedule(
-            rs.getLong("id"),
+            rs.getLong("user_id"),
             rs.getString("title"),
             rs.getString("user"),
             rs.getString("password"),
@@ -36,7 +36,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
 
     @Override
     public Schedule findById(Long id) {
-        String sql = "SELECT * FROM plan_schema WHERE id = ?";
+        String sql = "SELECT * FROM plan_schema WHERE user_id = ?";
         return jdbcTemplate.queryForObject(sql, scheduleRowMapper, id);
     }
 
@@ -55,19 +55,19 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
 
     @Override
     public void update(Long id, String title, String user) {
-        String sql = "UPDATE plan_schema SET title = ?, user = ?, updated_date = NOW() WHERE id = ?";
+        String sql = "UPDATE plan_schema SET title = ?, user = ?, updated_date = NOW() WHERE user_id = ?";
         jdbcTemplate.update(sql, title, user, id);
     }
 
     @Override
     public void delete(Long id) {
-        String sql = "DELETE FROM plan_schema WHERE id = ?";
+        String sql = "DELETE FROM plan_schema WHERE user_id = ?";
         jdbcTemplate.update(sql, id);
     }
 
     @Override
     public String getPasswordById(Long id) {
-        String sql = "SELECT password FROM plan_schema WHERE id = ?";
+        String sql = "SELECT password FROM plan_schema WHERE user_id = ?";
         return jdbcTemplate.queryForObject(sql, String.class, id);
     }
 }

@@ -27,9 +27,9 @@ public class PlanApiController {
 
     @GetMapping
     public ResponseEntity<List<ScheduleResponseDto>> getSchedules(
-            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String user,
             @RequestParam(required = false) String updatedDate) {
-        return ResponseEntity.ok(scheduleService.getSchedules(username, updatedDate));
+        return ResponseEntity.ok(scheduleService.getSchedules(user, updatedDate));
     }
 
     @GetMapping("/{id}")
